@@ -1,0 +1,67 @@
+element.style {
+    width: 27em;
+}
+.infobox {
+    border: 1px solid #a2a9b1;
+    background: #f8f9fa;
+    margin-bottom: 0.5em;
+    margin-left: 1em;
+    padding: 0.4em;
+    float: left;
+    clear: right;
+    font-size: 90%;
+    width: 23em;
+    vertical-align: middle;
+    text-align: left;
+    line-height: 1.5em;
+    border-collapse: separate;
+    border-spacing: 2px;
+}
+.infobox-header {
+    background: #dcebff;
+    text-align: center;
+}
+.infobox-below {
+    background: #dcebff;
+    text-align: center;
+}
+.infobox-above {
+    background: #dcebff;
+    text-align: center;
+}
+infobox .infobox-header, .infobox .infobox-subheader, .infobox .infobox-image, .infobox .infobox-full-data, .infobox .infobox-below {
+    text-align: center;
+}
+table {
+    font-size: 100%;
+}
+user agent stylesheet
+table {
+    display: table;
+    border-collapse: separate;
+    box-sizing: border-box;
+    text-indent: initial;
+    border-spacing: 2px;
+    border-color: grey;
+}
+.mw-content-ltr {
+    direction: ltr;
+}
+.vector-body {
+    font-size: 0.875em;
+    font-size: calc(1em * 0.875);
+    line-height: 1.6;
+}
+.mw-body, .parsoid-body {
+    background-color: #ffffff;
+    color: #202122;
+    direction: ltr;
+    padding: 1em;
+}
+html, body {
+    font-family: sans-serif;
+}
+html {
+    font-size: 100%;
+
+}
