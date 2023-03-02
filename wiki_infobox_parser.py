@@ -47,6 +47,7 @@ def connection(search: str, lang: str) -> tuple:
         page_html: str = urllib.request.urlopen(search)
         page = None
     else:
+        #https://ru.wikipedia.org/w/api.php?action=opensearch&format=json&search=SEARCHREQUESTPUTHERE&namespace=0&limit=10&formatversion=2
         wikipedia.set_lang(lang)
         search_result: list = wikipedia.search(search)
 
