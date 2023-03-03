@@ -1,6 +1,7 @@
-import wikipedia
+import requests
 from bs4 import BeautifulSoup
 import urllib.request
+import urllib.parse
 import re
 from typing import Optional
 
@@ -45,15 +46,19 @@ def connection(search: str, lang: str) -> tuple:
     # Checking if input values is url
     if is_https(search):
         page_html: str = urllib.request.urlopen(search)
-        page = None
-    else:
-        #https://ru.wikipedia.org/w/api.php?action=opensearch&format=json&search=SEARCHREQUESTPUTHERE&namespace=0&limit=10&formatversion=2
-        wikipedia.set_lang(lang)
-        search_result: list = wikipedia.search(search)
+        url = search
 
-        page = wikipedia.page(search_result[0], auto_suggest=False)
-        page_html: str = page.html()
-    return page_html, page
+    else:
+        search_request = urllib.parse.quote(search)
+        request = f"https://{lang}.wikipedia.org/w/api.php?action=opensearch&format=json&" \
+                  f"search={search_request}&namespace=0&limit=10&formatversion=2"
+
+        response = requests.get(request)
+        url = response.json()[3][0]
+
+        page_html: str = urllib.request.urlopen(url)
+
+    return page_html, url
 
 
 # *** How to annotate BS4 object?? ***
@@ -113,7 +118,6 @@ def infobox_item(items: list, soup) -> dict:
 # and this
 # <class 'bs4.BeautifulSoup'>
 def infobox_all(search: str, soup, page, summary: bool = False) -> dict:
-
     result_dict = dict()
     tr = soup.find('table', class_='infobox').find_all('tr')
 
@@ -190,7 +194,7 @@ def infobox_text(search: str, items: Optional[list] = None,
                  lang: str = 'en', print_result: bool = False,
                  get_url: bool = False, summary: bool = False):
     try:
-        page_html, page = connection(search, lang)
+        page_html, page_url = connection(search, lang)
         soup = BeautifulSoup(page_html, 'lxml')
 
         # Get article's infobox header, and write it in result dictionary
@@ -209,14 +213,11 @@ def infobox_text(search: str, items: Optional[list] = None,
     if items is not None:
         result_dict = infobox_item(items=items, soup=soup)
     else:
-        result_dict = infobox_all(search=search, soup=soup, page=page, summary=summary)
+        result_dict = infobox_all(search=search, soup=soup, page=page_url, summary=summary)
 
-    # add url for each wiki page in result if attribute get_url is True:
+    # add url for each wiki page_url in result if attribute get_url is True:
     if get_url:
-        if is_https(search):
-            result_dict['url'] = search
-        else:
-            result_dict['url'] = page.url
+        result_dict['url'] = page_url
 
     # print result if "print" parameter is True
     if print_result:
@@ -231,7 +232,6 @@ def infobox_text(search: str, items: Optional[list] = None,
 
 def infobox_html(search: str, create_html: bool = False,
                  lang: str = 'en', file_name: Optional[str] = None) -> str:
-
     if is_https(search):
         lang = lang_definer(search)
 
