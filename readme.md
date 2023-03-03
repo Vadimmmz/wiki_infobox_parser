@@ -8,7 +8,6 @@ we can get data from thousands of pages in a very short time.
 
 ## Used packages
 
-- wikipedia~=1.4.0
 - beautifulsoup4~=4.11.1
 
 ## How to use
