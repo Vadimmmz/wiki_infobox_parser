@@ -10,6 +10,21 @@ we can get data from thousands of pages in a very short time.
 
 - beautifulsoup4~=4.11.1
 
+## How to install
+```bash
+git clone https://github.com/Vadimmmz/wiki_infobox_parser.git
+python -m venv env
+
+# Activate virtual environment for Windows
+source env/Scripts/activate
+
+# Activate virtual environment fo for Linux
+source env/bin/activate
+
+pip install -r requirements.txt
+
+```
+
 ## How to use
 Read this instruction once and you will have no questions about how 
 to use this module. The text below describes the operation of the main 

@@ -276,6 +276,7 @@ def infobox_html(search: str, create_html: bool = False,
 def get_categories_data(url: str, show_len: bool = False, href_dict: bool = False) -> list:
     data = []
     next_page_title = ['next page', 'Следующая страница']
+    wrong_pattern: list[str] = ['q:Категор', 'Категория', 'commons:C', 'Category:']
 
     try:
         # Checking if url is correct
@@ -296,7 +297,7 @@ def get_categories_data(url: str, show_len: bool = False, href_dict: bool = Fals
 
         i = i.find('a', title=True)
         if i is not None:
-            if i['title'][:9] not in ['q:Категор', 'Категория', 'commons:C', 'Category:']:
+            if i['title'][:9] not in wrong_pattern:
                 if href_dict:
                     url = 'https://' + lang + '.wikipedia.org' + i['href']
                     data.append({'title': i['title'], 'url': url})
